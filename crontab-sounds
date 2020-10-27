@@ -1,0 +1,46 @@
+# Examples of ways to make your linux machine play sounds at regular intervals.
+# I used a RasPi and https://www.adafruit.com/product/3346
+# I found <3 second sound files that weren't too jarring. No sirens here! 
+# If I ever remember the website I got them from, I'll share it.
+# Bailey Steinfadt
+
+################################ TO USE ################################
+# Edit cron by typing `crontab -e` and then editing the file to include one of 
+# the sections below or remix your own! 
+
+# cron syntax: 
+# m h  dom mon dow   command
+
+# Change the .wav or .mp3 file paths to ones you have on your machine.
+
+# cvlc will play in the background, but if you don't use --play-and-exit, 
+# you'll bog down the Pi with too many processes in about 1.5 days. 
+# Ask me how I know!
+
+
+-------------------------------------------------------------------------
+
+# Play a different sound every 10 minutes, from 8am to 7pm, Monday through Friday.
+# This is what I currently run in my office.
+
+0 08-19 * * 1-5  cvlc ~/buzz.mp3 --play-and-exit
+10 08-18 * * 1-5  cvlc ~/switch.mp3 --play-and-exit
+20 08-18 * * 1-5  cvlc ~/button.wav --play-and-exit
+30 08-18 * * 1-5  cvlc ~/pop.wav --play-and-exit
+40 08-18 * * 1-5  cvlc ~/click.wav --play-and-exit
+50 08-18 * * 1-5  cvlc ~/tick.mp3 --play-and-exit
+
+-------------------------------------------------------------------------
+
+# Play the same sound every 15 minutes from 8am to 7pm every day
+# It takes two lines because 08-18 will play during hours that start with that number
+# and you need the second line to do 7pm
+
+*/15 08-18 * * *  cvlc ~/tick.mp3 --play-and-exit
+0 19 * * * cvlc ~/tick.mp3 --play-and-exit
+
+-------------------------------------------------------------------------
+
+# RANDOM example to demonstrate cron: Play something festive at 6AM on Christmas
+
+0 6 25 12 * cvlc ~/Merry_Christmas.mp3 --play-and-exit
